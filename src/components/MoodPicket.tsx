@@ -45,7 +45,7 @@ const styles = StyleSheet.create({
     moodOptions: {
         flexDirection: 'row',
         justifyContent: "space-between",
-        paddingHorizontal: 20
+        paddingHorizontal: 20,
     },
     moodText: {
         fontSize: 24,
@@ -75,7 +75,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         borderWidth: 2,
         borderRadius: theme.space12,
-        borderColor: theme.colorPurple
+        borderColor: theme.colorPurple,
+
     },
     headingText: {
         fontWeight: 'bold',
