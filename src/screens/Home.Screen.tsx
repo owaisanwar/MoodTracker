@@ -1,17 +1,18 @@
 import React from "react";
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { MoodPicker } from "../components/MoodPicket";
-import { theme } from "../theme"
+import { theme } from "../theme";
+import { MoodOptionTypeWithDate, MoodOptionType } from '../types';
 export const Home: React.FC = () => {
+    const [moodList, setMoodList] = React.useState<MoodOptionTypeWithDate[]>([])
+    const handleSelectMood = React.useCallback((selectedMood: MoodOptionType) => {
+        setMoodList(current => [...current, { mood: selectedMood, date: Date.now() }])
+    }, [setMoodList])
     return (
         <View style={styles.container}>
-            <View style={styles.moodContainer}>
-                <Text style={styles.headingText}>How are you right now?</Text>
-                <MoodPicker key={'mood-picker'} />
-                <Pressable style={styles.button}>
-                    <Text style={styles.buttonText}>Choose</Text>
-                </Pressable>
-            </View>
+            <MoodPicker key={'mood-picker'} onHandleSelect={handleSelectMood} />
+            {moodList.map(item =>
+                <Text key={item.date}>{item.mood.emoji} {new Date(item.date).toString()}</Text>)}
         </View>
     )
 }
@@ -31,26 +32,8 @@ const styles = StyleSheet.create({
         borderRadius: theme.space12,
         borderColor: theme.colorPurple
     },
-    headingText: {
-        fontWeight: 'bold',
-        fontSize: theme.space18,
-        paddingTop: theme.space10,
-        letterSpacing: 1.25
-    },
-    button: {
-        backgroundColor: theme.colorPurple,
-        height: 40,
-        width: 150,
-        borderRadius: 25,
-        paddingVertical: theme.space10,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: theme.space14 / 2
-    },
-    buttonText: {
-        fontWeight: 'bold',
-        color: theme.colorWhite,
-        fontSize: theme.space14,
-        textAlign: "center"
+    moodList: {
+        flexDirection: "row"
     }
+
 })
