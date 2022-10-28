@@ -2,21 +2,13 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 import { MoodPicker } from "../components/MoodPicket";
 import { theme } from "../theme";
-import { MoodOptionTypeWithDate, MoodOptionType } from '../types';
-import { MoodItemRow } from "../components/ItemRow";
+import { useAppContext } from "../App.provider";
 export const Home: React.FC = () => {
-    const [moodList, setMoodList] = React.useState<MoodOptionTypeWithDate[]>([])
-    const handleSelectMood = React.useCallback((selectedMood: MoodOptionType) => {
-        setMoodList(current => [...current, { mood: selectedMood, date: Date.now() }])
-    }, [setMoodList])
+    const { handleSelectMood } = useAppContext();
     return (
         <View
             style={styles.container}>
             <MoodPicker key={'mood-picker'} onHandleSelect={handleSelectMood} />
-            {moodList.map(item =>
-                <MoodItemRow item={item} key={item.date} />
-                // <Text key={item.date}>{item.mood.emoji} {format(new Date(item.date), "dd MMM, yyyy 'at' h:mmaaa")}</Text>
-            )}
         </View>
     )
 }
