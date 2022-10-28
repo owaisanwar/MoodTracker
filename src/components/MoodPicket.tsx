@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Pressable } from 'react-native'
+import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
 import React from 'react'
 import { MoodOptionType } from '../types';
 import { theme } from '../theme';
@@ -13,14 +13,33 @@ const moodOptions: MoodOptionType[] = [
 type MoodPickerProps = {
     onHandleSelect: (moodOption: MoodOptionType) => void
 }
+
+const imageSrc = require('../../assets/butterflies.png');
+
+
 export const MoodPicker: React.FC<MoodPickerProps> = ({ onHandleSelect }) => {
     const [selectedMood, setSelectedMood] = React.useState<MoodOptionType>()
+    const [hasSelected, setHasSelected] = React.useState<boolean>(false);
+
     const onSelect = React.useCallback(() => {
         if (selectedMood) {
             onHandleSelect(selectedMood);
             setSelectedMood(undefined)
+            setHasSelected(true)
         }
     }, [onHandleSelect, selectedMood])
+
+    if (hasSelected) {
+        return (
+            <View style={styles.moodContainer}>
+                <Image source={imageSrc} />
+                <Pressable style={styles.button} onPress={() => setHasSelected(false)}>
+                    <Text style={styles.buttonText}>Choose another</Text>
+                </Pressable>
+            </View>
+        )
+    }
+
     return (
         <View style={styles.moodContainer}>
             <Text style={styles.headingText}>How are you right now?</Text>
@@ -76,13 +95,14 @@ const styles = StyleSheet.create({
         borderWidth: 2,
         borderRadius: theme.space12,
         borderColor: theme.colorPurple,
-
+        backgroundColor: 'rgba(0,0,0,0.2)'
     },
     headingText: {
         fontWeight: 'bold',
         fontSize: theme.space18,
         paddingTop: theme.space10,
-        letterSpacing: 1.25
+        letterSpacing: 1.25,
+        color: theme.colorWhite
     },
     button: {
         backgroundColor: theme.colorPurple,

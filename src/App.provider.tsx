@@ -13,7 +13,6 @@ const dataKey = 'my-app-data';
 
 const setAppData = async (appData: AppData): Promise<void> => {
     try {
-
         await AsyncStorage.setItem(dataKey, JSON.stringify(appData))
     } catch { }
 }
