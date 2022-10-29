@@ -3,7 +3,8 @@ import { MoodOptionType, MoodOptionTypeWithDate } from "./types";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 type AppContextType = {
     moodList: MoodOptionTypeWithDate[];
-    handleSelectMood: (mood: MoodOptionType) => void
+    handleSelectMood: (mood: MoodOptionType) => void;
+    handleDeleteMood: (mood: MoodOptionTypeWithDate) => void;
 }
 type AppData = {
     moodList: MoodOptionTypeWithDate[]
@@ -29,7 +30,8 @@ const getAppData = async (): Promise<AppData | null> => {
 
 const AppContext = createContext<AppContextType>({
     moodList: [],
-    handleSelectMood: () => { }
+    handleSelectMood: () => { },
+    handleDeleteMood: () => { }
 })
 
 type AppProviderContext = {
@@ -45,6 +47,16 @@ export const AppProvider: React.FC<AppProviderContext> = ({ children }) => {
         })
     }, [])
 
+    const handleDeleteMood = React.useCallback((mood: MoodOptionTypeWithDate) => {
+        setMoodList(current => {
+            const newMoodList = current.filter(val => val.date !== mood.date);
+
+            setAppData({ moodList: newMoodList });
+
+            return newMoodList;
+        })
+    }, [])
+
     React.useEffect(() => {
         const fetchAppData = async (): Promise<void> => {
             const data = await getAppData();
@@ -56,7 +68,7 @@ export const AppProvider: React.FC<AppProviderContext> = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider value={{ moodList, handleSelectMood }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ moodList, handleSelectMood, handleDeleteMood }}>{children}</AppContext.Provider>
     )
 }
 

@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     moodOptions: {
         flexDirection: 'row',
         justifyContent: "space-between",
-        paddingHorizontal: 20,
+        // paddingHorizontal: 20,
     },
     moodText: {
         fontSize: 24,
@@ -83,12 +83,13 @@ const styles = StyleSheet.create({
     },
     selectedMoodDescription: {
         color: '#454C73',
-        fontWeight: 'bold',
         fontSize: 10,
         textAlign: 'center',
+        fontFamily: theme.fontFamilyBold,
+        letterSpacing: 1
     },
     moodContainer: {
-        height: '35%',
+        height: 240,
         alignItems: 'center',
         marginHorizontal: theme.space10,
         justifyContent: 'space-around',
@@ -98,24 +99,24 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.2)'
     },
     headingText: {
-        fontWeight: 'bold',
         fontSize: theme.space18,
-        paddingTop: theme.space10,
+        // paddingTop: theme.space10,
         letterSpacing: 1.25,
-        color: theme.colorWhite
+        color: theme.colorWhite,
+        fontFamily: theme.fontFamilyBold
     },
     button: {
         backgroundColor: theme.colorPurple,
         height: 40,
         width: 150,
         borderRadius: 25,
-        paddingVertical: theme.space10,
+        // paddingVertical: theme.space10,
         alignItems: 'center',
         justifyContent: 'center',
         marginBottom: theme.space14 / 2
     },
     buttonText: {
-        fontWeight: 'bold',
+        fontFamily: theme.fontFamilyBold,
         color: theme.colorWhite,
         fontSize: theme.space14,
         textAlign: "center"
