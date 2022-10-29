@@ -4,6 +4,7 @@ import { StyleSheet } from "react-native";
 import { BottomTabsNavigator } from "./screens/BottomTabs.navigator";
 import { AppProvider } from "./App.provider";
 import { Platform, UIManager } from 'react-native';
+import 'react-native-gesture-handler'
 
 if (Platform.OS === 'android') {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -14,9 +15,11 @@ if (Platform.OS === 'android') {
 export const App: React.FC = () => {
   return (
     <AppProvider>
+      {/* <GestureHandlerRootView style={{ flex: 1 }} > */}
       <NavigationContainer >
         <BottomTabsNavigator />
       </NavigationContainer>
+      {/* </GestureHandlerRootView> */}
     </AppProvider>
   )
 }

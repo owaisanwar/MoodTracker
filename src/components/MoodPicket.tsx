@@ -2,8 +2,9 @@ import { View, Text, StyleSheet, Pressable, Image } from 'react-native'
 import React from 'react'
 import { MoodOptionType } from '../types';
 import { theme } from '../theme';
+import Reanimated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
 const moodOptions: MoodOptionType[] = [
-    { emoji: '🧑‍💻', description: 'studious' },
+    { emoji: '🧑', description: 'studious' },
     { emoji: '🤔', description: 'pensive' },
     { emoji: '😊', description: 'happy' },
     { emoji: '🥳', description: 'celebratory' },
@@ -14,13 +15,20 @@ type MoodPickerProps = {
     onHandleSelect: (moodOption: MoodOptionType) => void
 }
 
+const ReanimatedPressable = Reanimated.createAnimatedComponent(Pressable);
+
 const imageSrc = require('../../assets/butterflies.png');
 
 
 export const MoodPicker: React.FC<MoodPickerProps> = ({ onHandleSelect }) => {
     const [selectedMood, setSelectedMood] = React.useState<MoodOptionType>()
     const [hasSelected, setHasSelected] = React.useState<boolean>(false);
-
+    const buttonStyles = useAnimatedStyle(() => ({
+        opacity: selectedMood ? withTiming(1) : withTiming(0.5),
+        transform: [{
+            scale: selectedMood ? withTiming(1) : 0.8
+        }]
+    }), [selectedMood])
     const onSelect = React.useCallback(() => {
         if (selectedMood) {
             onHandleSelect(selectedMood);
@@ -53,9 +61,9 @@ export const MoodPicker: React.FC<MoodPickerProps> = ({ onHandleSelect }) => {
                     </View>
                 ))}
             </View>
-            <Pressable style={styles.button} onPress={onSelect}>
+            <ReanimatedPressable style={[styles.button, buttonStyles]} onPress={onSelect}>
                 <Text style={styles.buttonText}>Choose</Text>
-            </Pressable>
+            </ReanimatedPressable>
         </View>
     )
 }

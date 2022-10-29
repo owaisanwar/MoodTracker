@@ -11,6 +11,8 @@ const BottomTabs = createBottomTabNavigator();
 
 export const BottomTabsNavigator: React.FC = () => {
     return (
+
+
         <BottomTabs.Navigator screenOptions={
             ({ route }) => ({
                 tabBarActiveTintColor: theme.colorBlue,
