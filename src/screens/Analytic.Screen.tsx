@@ -3,6 +3,12 @@ import { StyleSheet, Text, View } from "react-native";
 import { useAppContext } from "../App.provider";
 import { VictoryPie } from 'victory-native'
 import { theme } from "../theme";
+import { MoodOptionType, MoodOptionTypeWithDate } from "../types";
+
+type ChartDataType = {
+    x: string,
+    y: number
+}
 export const Analytic: React.FC = () => {
     const appContext = useAppContext();
     const { moodList } = appContext;
@@ -14,15 +20,14 @@ export const Analytic: React.FC = () => {
             appearence[item.mood.emoji] = 1;
         }
     })
-    console.log(appearence)
-    const chartData = moodList.map(item => {
-        return {
-            x: item.mood.emoji,
-            y: appearence[item.mood.emoji],
-        }
-    });
-    console.log(chartData);
-    // console.log(moodList);
+    console.log(appearence, 'appear');
+    let chartData: ChartDataType[] = [];
+    moodList.forEach(item => {
+        let find = chartData.find(val => val?.x === item.mood.emoji)
+        if (!find) {
+            chartData.push({ x: item.mood.emoji, y: appearence[item.mood.emoji] })
+        } else return undefined;
+    })
     return (
         <View style={styles.container}>
             <VictoryPie
